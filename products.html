@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop All Products | Gilbo Sports Store</title>
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-title">
+      <h2>Shop All Products</h2>
+      <p>Filter by category or gender to find exactly what you need</p>
+    </div>
+
+    <form class="filters-bar" id="filterForm">
+      <select id="filterCategory" name="category"></select>
+      <select id="filterGender" name="gender">
+        <option value="">All Genders</option>
+        <option value="men">Men</option>
+        <option value="women">Women</option>
+        <option value="kids">Kids</option>
+        <option value="unisex">Unisex</option>
+      </select>
+      <input type="text" id="filterQuery" name="q" placeholder="Search products...">
+      <button type="submit" class="btn btn-primary">Filter</button>
+      <a href="products.html" class="btn btn-outline" style="color:#0b3d2e;border-color:#0b3d2e;">Reset</a>
+    </form>
+
+    <div class="product-grid" id="productResults"></div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/layout.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/products.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    renderLayout("products.html");
+    populateFilterForm();
+    renderProductGrid("productResults", getFilteredProducts());
+
+    document.getElementById("filterForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const params = new URLSearchParams();
+      const cat = document.getElementById("filterCategory").value;
+      const gender = document.getElementById("filterGender").value;
+      const q = document.getElementById("filterQuery").value.trim();
+      if (cat) params.set("category", cat);
+      if (gender) params.set("gender", gender);
+      if (q) params.set("q", q);
+      window.location.search = params.toString();
+    });
+  });
+</script>
+</body>
+</html>
