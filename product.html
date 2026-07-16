@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitleTag">Product | Gilbo Sports Store</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<section class="section" id="productSection" style="display:none;">
+  <div class="container" style="display:flex;gap:40px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:280px;max-width:420px;">
+      <div class="product-img" style="border-radius:var(--radius);box-shadow:var(--shadow);">
+        <img id="productImage" src="" alt="">
+      </div>
+    </div>
+
+    <div style="flex:1.4;min-width:280px;">
+      <span class="gender-tag" id="productGender"></span>
+      <div class="product-cat" id="productCategory"></div>
+      <h1 id="productName" style="margin:8px 0;color:var(--deep-green);"></h1>
+      <p id="productDescription" style="color:#555;margin-bottom:16px;"></p>
+
+      <div class="product-price" style="font-size:24px;margin-bottom:16px;" id="productPrice"></div>
+
+      <p id="productStockText" style="margin-bottom:20px;font-weight:600;"></p>
+
+      <form class="add-cart-form" style="max-width:320px;">
+        <input type="hidden" name="product_id" id="hiddenProductId">
+        <div class="form-group">
+          <label>Quantity</label>
+          <input type="number" name="quantity" value="1" min="1" required>
+        </div>
+        <button type="submit" class="add-cart-btn" id="addToCartBtn">Add to Cart</button>
+      </form>
+
+      <a id="askWhatsAppLink" href="#" target="_blank" rel="noopener" class="btn btn-outline mt-20" style="color:#0b3d2e;border-color:#0b3d2e;display:inline-block;">
+        💬 Ask About This Item on WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="notFoundSection" style="display:none;">
+  <div class="container">
+    <p>Sorry, that product could not be found.</p>
+    <a href="products.html" class="btn btn-primary">Back to Shop</a>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="data.js"></script>
+<script src="layout.js"></script>
+<script src="cart.js"></script>
+<script src="products.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    renderLayout("");
+    const params = new URLSearchParams(window.location.search);
+    const id = Number(params.get("id"));
+    const p = PRODUCTS.find(pr => pr.id === id && pr.active);
+
+    if (!p) {
+      document.getElementById("notFoundSection").style.display = "block";
+      return;
+    }
+
+    document.getElementById("productSection").style.display = "block";
+    document.getElementById("pageTitleTag").textContent = p.name + " | Gilbo Sports Store";
+    document.getElementById("productImage").src = p.image;
+    document.getElementById("productImage").alt = p.name;
+    document.getElementById("productGender").textContent = p.gender.charAt(0).toUpperCase() + p.gender.slice(1);
+    document.getElementById("productCategory").textContent = categoryName(p.categoryId);
+    document.getElementById("productName").textContent = p.name;
+    document.getElementById("productDescription").textContent = p.description;
+    document.getElementById("productPrice").textContent = formatPriceRange(p);
+    if (p.priceMax && p.priceMax > p.price) {
+      const note = document.createElement("p");
+      note.style.cssText = "font-size:13px;color:#7c8a86;margin-bottom:16px;";
+      note.textContent = "Price varies by size/variant — the exact amount is confirmed with you on WhatsApp before your order is finalized.";
+      document.getElementById("productPrice").insertAdjacentElement("afterend", note);
+    }
+    document.getElementById("hiddenProductId").value = p.id;
+    document.getElementById("askWhatsAppLink").href = waLink(SHOP.whatsapp, "Hello Gilbo Sports Store, I want to ask about the " + p.name + ".");
+
+    const stockText = document.getElementById("productStockText");
+    if (p.stock > 0) {
+      stockText.textContent = "✅ " + p.stock + " in stock";
+      stockText.style.color = "#0b7a3d";
+    } else {
+      stockText.textContent = "❌ Out of stock";
+      stockText.style.color = "#c0392b";
+      document.getElementById("addToCartBtn").disabled = true;
+      document.getElementById("addToCartBtn").textContent = "Out of Stock";
+    }
+
+    wireAddToCartForms();
+  });
+</script>
+</body>
+</html>
