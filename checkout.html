@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | Gilbo Sports Store</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:,">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-title"><h2>Checkout</h2><p>Fill in your details — we'll build your order and send it to us on WhatsApp</p></div>
+
+    <form class="form-card" id="checkoutForm">
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="checkoutName" required>
+        <div class="form-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" id="checkoutPhone" required placeholder="e.g. 0700 123 456">
+        <div class="form-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Pickup or Delivery</label>
+        <select id="deliveryOption">
+          <option value="pickup">Pickup at the shop</option>
+          <option value="delivery">Delivery</option>
+        </select>
+      </div>
+      <div class="form-group" id="addressGroup" style="display:none;">
+        <label>Delivery Address</label>
+        <input type="text" id="checkoutAddress" placeholder="e.g. Bugembe, Jinja">
+        <div class="form-error"></div>
+      </div>
+      <div class="form-group">
+        <label>Payment Method</label>
+        <select id="paymentMethod">
+          <option value="mtn_momo">MTN Mobile Money</option>
+          <option value="airtel_money">Airtel Money</option>
+          <option value="cash_on_delivery">Cash on Delivery / Pickup</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width:100%;">Send Order via WhatsApp</button>
+      <p style="font-size:12px;color:#7c8a86;margin-top:10px;">
+        We'll prepare a clear order summary and open WhatsApp for you to send it directly to Gilbo Sports Store.
+        Payment (Mobile Money or Cash) is arranged with our team once they confirm your order.
+      </p>
+    </form>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="data.js"></script>
+<script src="layout.js"></script>
+<script src="cart.js"></script>
+<script src="checkout.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    renderLayout("");
+    initCheckoutPage();
+  });
+</script>
+</body>
+</html>
