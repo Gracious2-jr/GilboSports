@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin | Gilbo Sports Store</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:,">
+</head>
+<body class="admin-body">
+
+<div class="admin-gate" id="adminGate">
+  <form class="form-card" id="adminLoginForm">
+    <h2 style="color:var(--deep-green);margin-bottom:6px;">Gilbo Sports Store</h2>
+    <p style="color:#7c8a86;margin-bottom:18px;">Admin Tool</p>
+    <div class="auto-response-box" style="border-color:#c0392b;background:#fdecea;display:none;" id="adminLoginError">
+      Incorrect password. Please try again.
+    </div>
+    <div class="form-group">
+      <label>Admin Password</label>
+      <input type="password" id="adminPasswordInput" required autofocus>
+    </div>
+    <button type="submit" class="btn btn-primary" style="width:100%;">Log In</button>
+    <p style="font-size:11.5px;color:#aaa;margin-top:14px;">
+      This is a simple deterrent, not real security — see the note at the top of assets/js/admin.js.
+    </p>
+  </form>
+</div>
+
+<div id="adminPanel" style="display:none;">
+  <div id="site-header"></div>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-title"><h2>Gilbo Sports Store Admin</h2><p>Add products, update prices &amp; stock, and manage automatic responses</p></div>
+
+      <div class="auto-response-box">
+        <strong>How this works (no database):</strong> edit anything below, then click
+        <strong>"Download data.js"</strong> at the bottom. Open your GitHub repository in a browser,
+        go to <code>assets/js/data.js</code>, click the pencil (✎) icon to edit it, select all,
+        delete, paste in the downloaded file's contents, and commit the change directly to the
+        main branch. GitHub Pages will publish the update within about a minute.
+      </div>
+
+      <h2 class="mt-20" style="color:var(--deep-green);">Shop Details</h2>
+      <div class="form-card" style="max-width:100%;" id="shopEditorFields"></div>
+
+      <h2 class="mt-20" style="color:var(--deep-green);">Products</h2>
+      <div class="admin-editor-row admin-editor-head">
+        <span>Name</span><span>Category</span><span>Min Price</span><span>Max Price (blank=none)</span><span>Stock</span><span>Image Path</span><span>Available</span>
+      </div>
+      <div id="productEditorRows"></div>
+      <button type="button" class="btn btn-primary mt-20" onclick="addNewProduct()">+ Add New Product</button>
+
+      <h2 class="mt-20" style="color:var(--deep-green);">Automatic Response Rules</h2>
+      <p style="color:#7c8a86;margin-bottom:10px;">When a customer's contact-form message contains a keyword, they instantly see the matching response (highest priority first).</p>
+      <div id="ruleEditorRows"></div>
+      <button type="button" class="btn btn-primary mt-20" onclick="addNewRule()">+ Add New Rule</button>
+    </div>
+  </section>
+
+  <div class="download-bar">
+    <button type="button" class="btn btn-primary" onclick="exportDataFile()">⬇️ Download data.js</button>
+    <span style="font-size:13px;color:#555;">Then replace assets/js/data.js in your GitHub repo to publish your changes.</span>
+  </div>
+
+  <div id="site-footer"></div>
+</div>
+
+<script src="data.js"></script>
+<script src="layout.js"></script>
+<script src="cart.js"></script>
+<script src="admin.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    initAdminPage();
+  });
+</script>
+</body>
+</html>
